@@ -1,17 +1,17 @@
 <script setup>
 import { ref } from "vue";
-const imgUrl1 = ref("/images/1.jpg");
-const imgUrl2 = ref("/images/2.jpg");
-const imgUrl3 = ref("/images/3.jpg");
+const imgUrl1 = ref("/images/flighthospital.png");
+const imgUrl2 = ref("/images/savelife.png");
+const imgUrl3 = ref("/images/note.png");
 </script>
 
 <template>
   <div class="container">
-    <h2 style="font-weight: bold; text-align: center;">提供最好的</h2>
+    <h2>提供最好的</h2>
     <div class="service-section">
       <div class="service-item">
         <img :src="imgUrl1" alt="醫療加值服務">
-        <div class="service-title">海外緊急住院+醫療專機加值服務</div>
+        <div class="service-title">海外緊急住院+醫療專機服務</div>
         <div class="service-description">
           經專業醫生判斷有機會啟動<br>
           <span class="highlight">緊急醫療轉送及安排返國</span>
@@ -55,35 +55,38 @@ body {
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 30px;
   color: #333;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .service-section {
   display: flex;
   justify-content: space-around;
   text-align: center;
+  margin-bottom: 50px;
 }
 
 .service-item {
-  width: 30%;
+  width: 40%;
 }
 
 .service-item img {
-  width: 80px;
-  height: 80px;
+  width: 130px;
+  height: 130px;
 }
 
 .service-title {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: bold;
   color: #0074a6;
   margin-top: 15px;
 }
 
 .service-description {
-  font-size: 14px;
+  font-size: 20px;
   color: #666;
   margin: 10px 0;
 }
@@ -101,7 +104,7 @@ h2 {
   color: #fff;
   text-decoration: none;
   border-radius: 20px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
 }
 
