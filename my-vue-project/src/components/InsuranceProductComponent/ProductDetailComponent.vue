@@ -1,5 +1,5 @@
 <script setup>
- import { reactive } from 'vue';
+import { reactive } from 'vue';
 
 const insuranceData = reactive([
   {
@@ -37,106 +37,116 @@ const insuranceData = reactive([
 </script>
 
 <template>
+  <div class="insurance-overview">
     <h2>保障概覽</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">主約 / 附約</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in insuranceData" :key="item.policyName">
-          <td>
-            <button class="btn policy-header" data-bs-toggle="collapse" :data-bs-target="'#collapse_' + item.policyName" >
-              {{ item.policyName }}
-            </button>
-            <div class="collapse" :id="'collapse_' + item.policyName">
-              <div class="container">
-                <h4>保障項目</h4>
-                <div class="row" v-for="coverage in item.coverages" :key="coverage.title">
-                  <div class="col-md-4 col-12">
-                    <strong>{{ coverage.title }}:</strong>
-                  </div>
-                  <div class="col-md-8 col-12">
-                    {{ coverage.description }}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col text-center">
-                    <small>{{ item.details }}</small>
-                  </div>
-                </div>
-              </div>
+    <div class="policy-list">
+      <div v-for="item in insuranceData" :key="item.policyName" class="policy-item">
+        <button class="policy-header" data-bs-toggle="collapse" :data-bs-target="'#collapse_' + item.policyName">
+          {{ item.policyName }}
+        </button>
+        <div class="collapse policy-content" :id="'collapse_' + item.policyName">
+          <h4>保障項目</h4>
+          <div class="coverage-list">
+            <div v-for="coverage in item.coverages" :key="coverage.title" class="coverage-item">
+              <div class="coverage-title">{{ coverage.title }}</div>
+              <div class="coverage-description">{{ coverage.description }}</div>
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </template>
+          </div>
+          <div class="details-text">{{ item.details }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="css" scoped>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f9f9f9;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h2 {
-      text-align: center;
-      font-size: 24px;
-      color: #333;
-      margin-bottom: 20px;
-    }
-    .policy-section {
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #fff;
-      margin-bottom: 15px;
-      overflow: hidden;
-    }
-    .policy-header {
-      background-color: #ddd;
-      color: #333;
-      padding: 15px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    
-    .policy-header:hover {
-      background-color: #5e666e;
-      color: #fff;
-    }
-    .policy-content {
-      padding: 20px;
-      display: none;
-    }
-    .policy-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    .policy-table th, .policy-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-    .policy-table th {
-      background-color: #f4f4f4;
-      font-weight: bold;
-    }
-    .highlight {
-      color: red;
-      font-weight: bold;
-    }
-    .expand-icon {
-      float: right;
-      font-size: 20px;
-      line-height: 1;
-    }
+/* 整體樣式 */
+.insurance-overview {
+  padding: 30px;
+}
 
+h2 {
+  font-size: 30px;
+  color: #222;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+h4 {
+  font-weight: bold;
+}
+
+
+/* 保障區塊 */
+.policy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 保單項目 */
+.policy-item {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 保單標題按鈕 */
+.policy-header {
+  width: 100%;
+  text-align: left;
+  background-color: lightgray;
+  color: #222;
+  padding: 12px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.policy-header:hover {
+  background-color: #5E666E;
+  color: white;
+}
+
+/* 內容區域 */
+.policy-content {
+  padding: 20px;
+  border-left: 4px solid lightgray;
+  margin-top: 5px;
+  background: rgba(0, 123, 255, 0.05);
+  border-radius: 5px;
+}
+
+/* 保障項目 */
+.coverage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.coverage-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.coverage-title {
+  font-weight: bold;
+}
+
+.coverage-description {
+  color: #222;
+}
+
+/* 詳細說明 */
+.details-text {
+  font-size: 14px;
+  color: #777;
+  text-align: center;
+  margin-top: 10px;
+}
 </style>
