@@ -13,7 +13,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 // Define the onSlideChange function
 const onSlideChange = () => {
-    console.log("slide change");
+  console.log("slide change");
 };
 
 // Define Swiper modules
@@ -26,17 +26,9 @@ const imgUrl4 = ref("/images/4.jpg");
 </script>
 
 <template>
-  <swiper
-    :loop="true"
-    :navigation="false"
-    :modules="modules"
-    :pagination="{ clickable: true }"
-    :slides-per-view="1"
-    :space-between="50"
-    :autoplay="{ delay: 2500, disableOnInteraction: false }"
-    @slideChange="onSlideChange"
-    class="mySwiper"
-  >
+  <swiper :loop="true" :navigation="false" :modules="modules" :pagination="{ clickable: true }" :slides-per-view="1"
+    :space-between="50" :autoplay="{ delay: 2500, disableOnInteraction: false }" @slideChange="onSlideChange"
+    class="mySwiper">
     <swiper-slide>
       <div class="slide-content">
         <div class="text-left">我是</div>
@@ -69,32 +61,60 @@ const imgUrl4 = ref("/images/4.jpg");
 </template>
 
 <style lang="css" scoped>
+.mySwiper {
+  width: 100%;
+  /* 設置寬度為 100% */
+  height: 400px;
+  /* 設置固定高度 */
+}
+
+.slide-image {
+  width: 100%;
+  /* 使圖片寬度為容器的 100% */
+  height: 100%;
+  /* 設置高度為容器的 100% */
+  object-fit: cover;
+  /* 保證圖片以適當的方式填充容器 */
+}
+
 .swiper-slide {
-    display: flex; /* 使用 Flexbox */
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
-    height: 100%; /* 確保容器高度一致 */
+  display: flex;
+  /* 使用 Flexbox */
+  justify-content: center;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
+  height: 100%;
+  /* 確保容器高度一致 */
 }
 
 .slide-content {
-    display: flex;
-    align-items: center; /* 垂直居中 */
-    justify-content: space-between; /* 左右對齊 */
-    width: 100%;
-    max-width: 800px; /* 限制內容寬度 */
+  display: flex;
+  align-items: center;
+  /* 垂直居中 */
+  justify-content: space-between;
+  /* 左右對齊 */
+  width: 100%;
+  max-width: 800px;
+  /* 限制內容寬度 */
 }
 
 .text-left,
 .text-right {
-    width: 20%; /* 左右文字區域寬度 */
-    text-align: center; /* 文字居中 */
-    font-size: 16px;
-    color: #333;
+  width: 20%;
+  /* 左右文字區域寬度 */
+  text-align: center;
+  /* 文字居中 */
+  font-size: 16px;
+  color: #333;
 }
 
 img {
-    max-width: 60%; /* 限制圖片寬度 */
-    max-height: 300px; /* 限制圖片高度 */
-    height: auto; /* 等比例縮放 */
+  max-width: 60%;
+  /* 限制圖片寬度 */
+  max-height: 300px;
+  /* 限制圖片高度 */
+  height: auto;
+  /* 等比例縮放 */
 }
 </style>

@@ -8,7 +8,7 @@ import ProductSloganComponent from '@/components/InsuranceProductComponent/Produ
 </script>
 
 <template>
-    <div>
+    <div class="container">
         <div>
             <ProductSloganComponent></ProductSloganComponent>
         </div>
@@ -21,4 +21,8 @@ import ProductSloganComponent from '@/components/InsuranceProductComponent/Produ
     </div>
 </template>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.container>div {
+    width: 100%;
+}
+</style>

@@ -6,29 +6,25 @@ import TravelTitleComponent from '@/components/InsuranceProductComponent/TravelT
 </script>
 
 <template>
-    <div>
+
+    <div class="main-content">
+
+        <div class="container-fluid">
+            <TravelTitleComponent></TravelTitleComponent>
+        </div>
+
         <div>
-
-            <div>
-                <TravelTitleComponent></TravelTitleComponent>
-            </div>
-            <div>
-                <ProductNavbarComponent></ProductNavbarComponent>
-            </div>
-            <div>
-
-            </div>
-
-            <ul>
-                <li>
-                    <!-- <RouterLink :to="{ name: 'travel' }">旅平險</RouterLink> -->
-                </li>
-                <li></li>
-                <li></li>
-            </ul>
-
+            <ProductNavbarComponent></ProductNavbarComponent>
         </div>
     </div>
+
+
+
 </template>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.main-content {
+    padding-top: 70px;
+    width: 100% !important;
+}
+</style>
