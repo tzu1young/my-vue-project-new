@@ -26,38 +26,28 @@ const imgUrl4 = ref("/images/4.jpg");
 </script>
 
 <template>
-  <swiper :loop="true" :navigation="false" :modules="modules" :pagination="{ clickable: true }" :slides-per-view="1"
-    :space-between="50" :autoplay="{ delay: 2500, disableOnInteraction: false }" @slideChange="onSlideChange"
-    class="mySwiper">
-    <swiper-slide>
-      <div class="slide-content">
-        <div class="text-left">我是</div>
-        <img :src="imgUrl1" alt="袋熊1" />
-        <div class="text-right">袋熊</div>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <div class="text-left">我愛</div>
-        <img :src="imgUrl2" alt="袋熊2" />
-        <div class="text-right">抱抱</div>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <div class="text-left">是不是</div>
-        <img :src="imgUrl3" alt="袋熊3" />
-        <div class="text-right">沒被揍過</div>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <div class="text-left">盯</div>
-        <img :src="imgUrl4" alt="袋熊4" />
-        <div class="text-right">~</div>
-      </div>
-    </swiper-slide>
-  </swiper>
+  <div class="container">
+    <!-- 廣告輪播 -->
+    <swiper :loop="true" :navigation="false" :modules="modules" :pagination="{ clickable: true }" :slides-per-view="1"
+      :space-between="10" :autoplay="{ delay: 2500, disableOnInteraction: false }" @slideChange="onSlideChange"
+      class="mySwiper">
+      <swiper-slide>
+        <img :src="imgUrl1" class="slide-image" alt="product advertisement">
+      </swiper-slide>
+
+      <swiper-slide>
+        <img :src="imgUrl2" class="slide-image" alt="product advertisement">
+      </swiper-slide>
+
+      <swiper-slide>
+        <img :src="imgUrl3" class="slide-image" alt="product advertisement">
+      </swiper-slide>
+
+      <swiper-slide>
+        <img :src="imgUrl4" class="slide-image" alt="product advertisement">
+      </swiper-slide>
+    </swiper>
+  </div>
 </template>
 
 <style lang="css" scoped>
@@ -73,8 +63,6 @@ const imgUrl4 = ref("/images/4.jpg");
   /* 使圖片寬度為容器的 100% */
   height: 100%;
   /* 設置高度為容器的 100% */
-  object-fit: cover;
-  /* 保證圖片以適當的方式填充容器 */
 }
 
 .swiper-slide {
@@ -110,11 +98,9 @@ const imgUrl4 = ref("/images/4.jpg");
 }
 
 img {
-  max-width: 60%;
-  /* 限制圖片寬度 */
-  max-height: 300px;
-  /* 限制圖片高度 */
-  height: auto;
-  /* 等比例縮放 */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* 保證圖片不被裁切 */
 }
 </style>

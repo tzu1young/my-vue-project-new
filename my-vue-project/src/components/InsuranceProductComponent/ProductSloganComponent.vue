@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from "vue";
-    const imgUrl1 = ref("/images/1.jpg");
-    const imgUrl2 = ref("/images/2.jpg");
-    const imgUrl3 = ref("/images/3.jpg");
+const imgUrl1 = ref("/images/1.jpg");
+const imgUrl2 = ref("/images/2.jpg");
+const imgUrl3 = ref("/images/3.jpg");
 </script>
 
 <template>
-    <div class="container">
-    <h2>提供最好的</h2>
+  <div class="container">
+    <h2 style="font-weight: bold; text-align: center;">提供最好的</h2>
     <div class="service-section">
       <div class="service-item">
         <img :src="imgUrl1" alt="醫療加值服務">
@@ -34,66 +34,83 @@ import { ref } from "vue";
         </div>
       </div>
     </div>
-    <a href="#" class="button">立即投保</a>
+    <div class="button-container">
+      <a href="#" class="button">立即投保</a>
+    </div>
   </div>
 </template>
 
 <style lang="css" scoped>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 50px 20px;
-    }
-    h2 {
-      font-size: 24px;
-      color: #333;
-      margin-bottom: 30px;
-    }
-    .service-section {
-      display: flex;
-      justify-content: space-around;
-      text-align: center;
-    }
-    .service-item {
-      width: 30%;
-    }
-    .service-item img {
-      width: 80px;
-      height: 80px;
-    }
-    .service-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #0074a6;
-      margin-top: 15px;
-    }
-    .service-description {
-      font-size: 14px;
-      color: #666;
-      margin: 10px 0;
-    }
-    .highlight {
-      color: #d51a1a;
-      font-weight: bold;
-    }
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 30px;
-      background-color: #0074a6;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 20px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-    .button:hover {
-      background-color: #00587a;
-    }
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.service-section {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.service-item {
+  width: 30%;
+}
+
+.service-item img {
+  width: 80px;
+  height: 80px;
+}
+
+.service-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0074a6;
+  margin-top: 15px;
+}
+
+.service-description {
+  font-size: 14px;
+  color: #666;
+  margin: 10px 0;
+}
+
+.highlight {
+  color: #d51a1a;
+  font-weight: bold;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 30px;
+  background-color: #0074a6;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button:hover {
+  background-color: #00587a;
+}
 </style>
