@@ -19,10 +19,10 @@ const onSlideChange = () => {
 // Define Swiper modules
 const modules = [Autoplay, Navigation, Pagination];
 
-const imgUrl1 = ref("/images/1.jpg");
-const imgUrl2 = ref("/images/2.jpg");
-const imgUrl3 = ref("/images/3.jpg");
-const imgUrl4 = ref("/images/4.jpg");
+const imgUrl1 = ref("/images/5.JPG");
+const imgUrl2 = ref("/images/6.jpg");
+const imgUrl3 = ref("/images/7.JPG");
+
 </script>
 
 <template>
@@ -42,10 +42,10 @@ const imgUrl4 = ref("/images/4.jpg");
       <swiper-slide>
         <img :src="imgUrl3" class="slide-image" alt="product advertisement">
       </swiper-slide>
-
+      <!-- 
       <swiper-slide>
         <img :src="imgUrl4" class="slide-image" alt="product advertisement">
-      </swiper-slide>
+      </swiper-slide> -->
     </swiper>
   </div>
 </template>

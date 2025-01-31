@@ -116,7 +116,7 @@ h4 {
   padding: 20px;
   border-left: 4px solid lightgray;
   margin-top: 5px;
-  background: rgba(0, 123, 255, 0.05);
+  background-color: transparent;
   border-radius: 5px;
 }
 
