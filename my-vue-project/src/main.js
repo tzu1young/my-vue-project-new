@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
+
+
 // Create app first
 const app = createApp(App);
 
@@ -39,7 +41,11 @@ import router from "./router";
 
 // Pinia
 import { createPinia } from "pinia";
+//pinia-plugin-persistedstate
+import piniaPersistedState from "pinia-plugin-persistedstate";
 const pinia = createPinia();
+
+pinia.use(piniaPersistedState);
 
 // Element Plus
 import ElementPlus from "element-plus";

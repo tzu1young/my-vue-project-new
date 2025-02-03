@@ -1,47 +1,44 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useInsuranceStore } from "@/store/insuranceStore";
 
 export default defineComponent({
-  name: 'InsuranceCalculator',
+  name: "InsuranceCalculator",
   data() {
     return {
-      destination: "131", // 預設選擇日本
-      startDate: "",      // 修改：使用單一 startDate 作為日期時間輸入
-      startHour: 22,      // 時間
-      days: 3,            // 旅遊天數
+      destination: "日本", 
+      startDate: "",      
+      startHour: 12,      
+      days: 3,            
       insuranceAmount: 1000,
       extraInjuryCoverage: false,
       extraEmergencyCoverage: false,
       extraTransportCoverage: false,
-      minDate: new Date().toISOString().split("T")[0], // 設定最小日期為今天
+      minDate: new Date().toISOString().split("T")[0], 
+      insuranceStore: useInsuranceStore(), // 引入 Pinia Store
     };
   },
   computed: {
     isOverseas() {
-      return this.destination !== "098"; // 判斷是否為國內
+      return this.destination !== "國內";
     },
     endDate() {
-      if (!this.startDate) return ""; // 如果沒有選擇起始日期，返回空字符串
+      if (!this.startDate) return ""; 
 
       const startDate = new Date(this.startDate);
-      startDate.setHours(this.startHour); // 設置起始時間
-      startDate.setDate(startDate.getDate() + this.days); // 根據天數計算結束日期
+      startDate.setHours(this.startHour);
+      startDate.setDate(startDate.getDate() + this.days);
       return `${startDate.getFullYear()}年${startDate.getMonth() + 1}月${startDate.getDate()}日 ${startDate.getHours()}:00`;
     },
     insuranceCost() {
-      if (this.insuranceAmount == 1000) {
-        return 200 + this.days * 3;
-      } else if (this.insuranceAmount == 700) {
-        return 140 + this.days * 3;
-      } else if (this.insuranceAmount == 500) {
-        return 100 + this.days * 3;
-      } else if (this.insuranceAmount == 300) {
-        return 60 + this.days * 3;
-      } else if (this.insuranceAmount == 100) {
-        return 20 + this.days * 3;
-      } else {
-        return 0; // 預設值，防止意外情況
-      }
+      const baseCostMap = {
+        1000: 200,
+        700: 140,
+        500: 100,
+        300: 60,
+        100: 20,
+      };
+      return (baseCostMap[this.insuranceAmount] || 0) + this.days * 3;
     },
     totalCost() {
       let total = this.insuranceCost;
@@ -54,8 +51,22 @@ export default defineComponent({
     },
   },
   methods: {
+    addToCompare() {
+      this.insuranceStore.addPolicy({
+        id: Date.now(),
+        destination: this.destination, // 從組件 data 取值
+        startDate: this.startDate,
+        startHour: this.startHour,
+        days: this.days,
+        insuranceAmount: this.insuranceAmount,
+        extraInjuryCoverage: this.extraInjuryCoverage,
+        extraEmergencyCoverage: this.extraEmergencyCoverage,
+        extraTransportCoverage: this.extraTransportCoverage,
+        totalCost: this.totalCost,
+      });
+    },
     submit() {
-      alert(`投保成功！總保費：${this.totalCost} 元`);
+      alert(`加入比較：目的地:${this.destination} 開始日期:${this.startDate} 天數:${this.days} 保額:${this.insuranceAmount}萬 123:${this.extraEmergencyCoverage} 總金額:${this.totalCost} 元`);
     },
   },
 });
@@ -72,31 +83,31 @@ export default defineComponent({
         <div class="section1">
           <span class="span1">旅遊地點</span>
           <select v-model="destination" id="destination" class="form-select select-dropdown">
-            <option value="098">國內</option>
-            <option value="131">日本</option>
-            <option value="132">南韓</option>
-            <option value="101">中國大陸</option>
-            <option value="141">香港</option>
-            <option value="142">澳門</option>
-            <option value="140">東南亞</option>
-            <option value="143">新加坡</option>
-            <option value="144">馬來西亞</option>
-            <option value="145">印尼</option>
-            <option value="146">泰國</option>
-            <option value="147">菲律賓</option>
-            <option value="148">越南</option>
-            <option value="149">緬甸</option>
-            <option value="150">寮國</option>
-            <option value="532">帛琉</option>
-            <option value="152">柬埔寨</option>
-            <option value="156">馬爾地夫</option>
-            <option value="301">歐洲申根國家</option>
-            <option value="302">歐洲非申根國家</option>
-            <option value="212">美國</option>
-            <option value="211">加拿大</option>
-            <option value="520">紐西蘭</option>
-            <option value="510">澳大利亞</option>
-            <option value="999">其他</option>
+            <option value="國內">國內</option>
+            <option value="日本">日本</option>
+            <option value="南韓">南韓</option>
+            <option value="中國大陸">中國大陸</option>
+            <option value="香港">香港</option>
+            <option value="澳門">澳門</option>
+            <option value="東南亞">東南亞</option>
+            <option value="新加坡">新加坡</option>
+            <option value="馬來西亞">馬來西亞</option>
+            <option value="印尼">印尼</option>
+            <option value="泰國">泰國</option>
+            <option value="菲律賓">菲律賓</option>
+            <option value="越南">越南</option>
+            <option value="緬甸">緬甸</option>
+            <option value="寮國">寮國</option>
+            <option value="帛琉">帛琉</option>
+            <option value="柬埔寨">柬埔寨</option>
+            <option value="馬爾地夫">馬爾地夫</option>
+            <option value="歐洲申根國家">歐洲申根國家</option>
+            <option value="歐洲非申根國家">歐洲非申根國家</option>
+            <option value="美國">美國</option>
+            <option value="加拿大">加拿大</option>
+            <option value="紐西蘭">紐西蘭</option>
+            <option value="澳大利亞">澳大利亞</option>
+            <option value="其他">其他</option>
           </select>
         </div>
       </div>
@@ -204,6 +215,11 @@ export default defineComponent({
       <div class="section result-box total-cost">
         <h3 style="color:#d51a1a; font-weight: bold;">保費合計：{{ totalCost }} 元</h3>
       </div>
+
+      <div>
+        <button @click="addToCompare(); submit()">+</button>
+      </div>
+
 
       <!-- 投保按鈕 -->
       <div class="button-container">
