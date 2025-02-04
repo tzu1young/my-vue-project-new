@@ -36,31 +36,33 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="container">
-        <div>
-            <ProductSloganComponent></ProductSloganComponent>
-        </div>
-        <div >
-            <ProductDetailComponent></ProductDetailComponent>
-        </div>
-        <div class="top">
-            <CalculatorComponent></CalculatorComponent>
-        </div>
-
-        <div id="fixedTable"><CalculateSidebarComponent></CalculateSidebarComponent></div>
+  <div class="container">
+    <div>
+      <ProductSloganComponent></ProductSloganComponent>
     </div>
+    <div>
+      <ProductDetailComponent></ProductDetailComponent>
+    </div>
+    <div class="top">
+      <CalculatorComponent></CalculatorComponent>
+    </div>
+
+    <div id="fixedTable">
+      <CalculateSidebarComponent></CalculateSidebarComponent>
+    </div>
+  </div>
 </template>
 
 <style lang="css" scoped>
 .container>div {
-    width: 100%;
+  width: 100%;
 }
 
 #fixedTable {
-    position: absolute;
-    right: -1600px; /* 靠右邊 20px，視需要調整 */
-  
+  position: absolute;
+  /*right: -1600px;
+  靠右邊 20px，視需要調整 */
+  left: 85%;
+
 }
-
-
 </style>
