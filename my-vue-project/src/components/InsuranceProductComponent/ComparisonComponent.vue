@@ -2,19 +2,64 @@
 import { onMounted } from "vue";
 import { useInsuranceStore } from "@/store/insuranceStore"; // 引入 pinia store
 import { storeToRefs } from "pinia"; // 引入 storeToRefs
+//pdf用
+import { ref, reactive } from "vue";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
+
+//pinia
 const store = useInsuranceStore(); // 使用 pinia store
 const { policies } = storeToRefs(store); // 取得 policies 陣列
+
 
 // 在組件掛載時載入數據
 onMounted(() => {
     // 不需要手動載入資料，因為 Pinia 自動處理了 persist
     // policies 已經會在 store 裡面同步更新
 });
+
+//pdf
+// 初始化數據
+
+const initData = reactive({
+
+    formData: {},
+    event: {
+        savePdf: async () => {
+            const element = document.getElementById("view");
+            if (!element) return;
+
+
+            const canvas = await html2canvas(element, {
+                useCORS: true,
+                backgroundColor: "#fff",
+                scale: 4, // 提高解析度，避免縮小後模糊
+            });
+
+            const imgData = canvas.toDataURL("image/png");
+
+            // **初始化 PDF**
+            const pdf = new jsPDF({
+                orientation: "portrait",
+                unit: "px",
+                format: "a4",
+            });
+
+
+            // **將圖片等比例縮小後加入 PDF**
+            pdf.addImage(imgData, "PNG", 0, 0, canvas.width * 0.2, canvas.height * 0.2);
+            pdf.save("等比例縮小_A4.pdf");
+        }
+
+
+
+    },
+});
 </script>
 
 <template>
-    <div class="main">
+    <div class="main" id="view">
         <h2>比較結果</h2>
         <table v-if="policies.length === 2" border="1">
             <thead>
@@ -71,12 +116,20 @@ onMounted(() => {
             </tbody>
         </table>
     </div>
+
+    <div class="d-flex justify-content-center">
+        <button class="pdfbtn" type="primary" @click="initData.event.savePdf">另存為PDF</button>
+    </div>
 </template>
 
 <style lang="css" scoped>
 table {
     width: 100%;
     border-collapse: collapse;
+    /* white-space: nowrap;
+    overflow-x: auto;
+    min-width: 300px; */
+
 }
 
 table tr {
@@ -114,7 +167,8 @@ table td {
     width: 35%;
     text-align: center;
     background-color: #eee;
-    padding: 10px 0;
+    padding: 15px;
+
 }
 
 .main {
@@ -130,5 +184,21 @@ h2 {
     text-align: center;
     font-weight: bold;
     margin-bottom: 25px;
+}
+
+.pdfbtn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: lightgray;
+    color: black;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.pdfbtn:hover {
+    background-color: #5E666E;
+    color: white;
 }
 </style>

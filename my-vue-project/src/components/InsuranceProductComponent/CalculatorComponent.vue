@@ -26,7 +26,7 @@ onMounted(() => {
 const isOverseas = computed(() => destination.value !== "國內");
 
 const endDate = computed(() => {
-  if (!startDate.value) return ""; 
+  if (!startDate.value) return "";
 
   const startDateObj = new Date(startDate.value);
   startDateObj.setHours(startHour.value);
@@ -355,7 +355,7 @@ h2 {
   text-align: center;
 }
 
-.compare{
+.compare {
   display: inline-block;
   padding: 10px 15px;
   background-color: lightgray;
@@ -366,8 +366,8 @@ h2 {
   font-weight: bold;
 }
 
-.compare:hover{
-  background-color:  #5E666E;
+.compare:hover {
+  background-color: #5E666E;
   color: white;
 }
 
