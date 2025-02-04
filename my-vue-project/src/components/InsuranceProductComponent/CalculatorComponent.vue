@@ -216,8 +216,9 @@ const addToCompare = () => {
         <h3 style="color:#d51a1a; font-weight: bold;">保費合計：{{ totalCost }} 元</h3>
       </div>
 
+      <!-- 加入比較清單按鈕 -->
       <div>
-        <button @click="addToCompare()">+</button>
+        <button @click="addToCompare()" class="compare">＋比較清單</button>
       </div>
 
 
@@ -352,6 +353,22 @@ h2 {
   padding: 10px 20px;
   font-size: 16px;
   text-align: center;
+}
+
+.compare{
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: lightgray;
+  color: black;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.compare:hover{
+  background-color:  #5E666E;
+  color: white;
 }
 
 .select-dropdown {
