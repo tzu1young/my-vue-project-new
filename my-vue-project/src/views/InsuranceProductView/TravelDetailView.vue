@@ -2,7 +2,7 @@
 import CalculatorComponent from '@/components/InsuranceProductComponent/CalculatorComponent.vue';
 import ProductDetailComponent from '@/components/InsuranceProductComponent/ProductDetailComponent.vue';
 import ProductSloganComponent from '@/components/InsuranceProductComponent/ProductSloganComponent.vue';
-
+import CalculateSidebarComponent from '@/components/InsuranceProductComponent/CalculateSidebarComponent.vue'
 
 
 </script>
@@ -18,6 +18,8 @@ import ProductSloganComponent from '@/components/InsuranceProductComponent/Produ
         <div>
             <CalculatorComponent></CalculatorComponent>
         </div>
+
+        <div><CalculateSidebarComponent></CalculateSidebarComponent></div>
     </div>
 </template>
 
