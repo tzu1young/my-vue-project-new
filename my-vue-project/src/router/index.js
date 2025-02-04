@@ -18,6 +18,7 @@ import TravelDetailView from "@/views/InsuranceProductView/TravelDetailView.vue"
 import TravelIntroductionView from "@/views/InsuranceProductView/TravelIntroductionView.vue";
 import TravelPolicyView from "@/views/InsuranceProductView/TravelPolicyView.vue";
 
+import TravelComparisonView from "../views/InsuranceProductView/TravelComparisonView.vue";  //本次新增
 
 const routes = [
 
@@ -82,6 +83,7 @@ const routes = [
       { path: "policy", component: TravelPolicyView, name: "travel-policy" }
     ]
   },
+  { path: "/productlist/travel/comparison", component: TravelComparisonView, name: "comparison" },
 
   //category1
   {

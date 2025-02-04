@@ -22,11 +22,9 @@ const removeInsurance = (index) => {
     <div class="position-relative" style="width: 265px;">
       <div class="text-center card bg-primary text-white border-0">
         <div class="card-body">
-          <p class="m-0">旅平險共有</p>
-          <p class="display-1 fw-bold">{{ policies.length }}</p> <!-- 顯示保單數量 -->
-          <p>推薦方案可選擇</p>
+          <p class="m-0 fw-bold">試算比較</p>
           <p class="small">
-            <i class="fas fa-check"></i> 還可以選擇 {{ 2 - policies.length }} 種方案
+            <i class="fas fa-check"></i> 請選選擇 {{ 2 - policies.length }} 種方案
           </p>
           <div v-if="policies.length">
             <div
