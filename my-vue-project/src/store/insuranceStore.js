@@ -10,6 +10,7 @@ export const useInsuranceStore = defineStore("insuranceStore", {
                 alert("最多只能比較兩筆保單！");
                 return;
             }
+            alert('加入比較！');
             this.policies.push(policy);
         },
     },

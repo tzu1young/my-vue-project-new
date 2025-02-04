@@ -1,75 +1,75 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { useInsuranceStore } from "@/store/insuranceStore";
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import { useInsuranceStore } from '@/store/insuranceStore'; // 根據您的文件結構調整導入
 
-export default defineComponent({
-  name: "InsuranceCalculator",
-  data() {
-    return {
-      destination: "日本", 
-      startDate: "",      
-      startHour: 12,      
-      days: 3,            
-      insuranceAmount: 1000,
-      extraInjuryCoverage: false,
-      extraEmergencyCoverage: false,
-      extraTransportCoverage: false,
-      minDate: new Date().toISOString().split("T")[0], 
-      insuranceStore: useInsuranceStore(), // 引入 Pinia Store
-    };
-  },
-  computed: {
-    isOverseas() {
-      return this.destination !== "國內";
-    },
-    endDate() {
-      if (!this.startDate) return ""; 
+const store = useInsuranceStore();
 
-      const startDate = new Date(this.startDate);
-      startDate.setHours(this.startHour);
-      startDate.setDate(startDate.getDate() + this.days);
-      return `${startDate.getFullYear()}年${startDate.getMonth() + 1}月${startDate.getDate()}日 ${startDate.getHours()}:00`;
-    },
-    insuranceCost() {
-      const baseCostMap = {
-        1000: 200,
-        700: 140,
-        500: 100,
-        300: 60,
-        100: 20,
-      };
-      return (baseCostMap[this.insuranceAmount] || 0) + this.days * 3;
-    },
-    totalCost() {
-      let total = this.insuranceCost;
-      if (this.extraInjuryCoverage) total += Math.floor(this.insuranceCost / 3);
-      if (this.isOverseas) {
-        if (this.extraEmergencyCoverage) total += Math.floor(this.insuranceCost * 0.8);
-        if (this.extraTransportCoverage) total += Math.floor(this.insuranceCost / 2);
-      }
-      return total;
-    },
-  },
-  methods: {
-    addToCompare() {
-      this.insuranceStore.addPolicy({
-        id: Date.now(),
-        destination: this.destination, // 從組件 data 取值
-        startDate: this.startDate,
-        startHour: this.startHour,
-        days: this.days,
-        insuranceAmount: this.insuranceAmount,
-        extraInjuryCoverage: this.extraInjuryCoverage,
-        extraEmergencyCoverage: this.extraEmergencyCoverage,
-        extraTransportCoverage: this.extraTransportCoverage,
-        totalCost: this.totalCost,
-      });
-    },
-    submit() {
-      alert(`加入比較：目的地:${this.destination} 開始日期:${this.startDate} 天數:${this.days} 保額:${this.insuranceAmount}萬 123:${this.extraEmergencyCoverage} 總金額:${this.totalCost} 元`);
-    },
-  },
+// Reactive state
+const destination = ref("日本");
+const startDate = ref("");
+const startHour = ref(12);
+const days = ref(3);
+const insuranceAmount = ref(1000);
+const extraInjuryCoverage = ref(false);
+const extraEmergencyCoverage = ref(false);
+const extraTransportCoverage = ref(false);
+
+// Minimum date for date picker
+const minDate = new Date().toISOString().split("T")[0];
+
+// On mounted lifecycle hook
+onMounted(() => {
+  store.policies = []; // Sync with localStorage
 });
+
+// Computed properties
+const isOverseas = computed(() => destination.value !== "國內");
+
+const endDate = computed(() => {
+  if (!startDate.value) return ""; 
+
+  const startDateObj = new Date(startDate.value);
+  startDateObj.setHours(startHour.value);
+  startDateObj.setDate(startDateObj.getDate() + days.value);
+  return `${startDateObj.getFullYear()}年${startDateObj.getMonth() + 1}月${startDateObj.getDate()}日 ${startDateObj.getHours()}:00`;
+});
+
+const insuranceCost = computed(() => {
+  const baseCostMap = {
+    1000: 200,
+    700: 140,
+    500: 100,
+    300: 60,
+    100: 20,
+  };
+  return (baseCostMap[insuranceAmount.value] || 0) + days.value * 3;
+});
+
+const totalCost = computed(() => {
+  let total = insuranceCost.value;
+  if (extraInjuryCoverage.value) total += Math.floor(insuranceCost.value / 3);
+  if (isOverseas.value) {
+    if (extraEmergencyCoverage.value) total += Math.floor(insuranceCost.value * 0.8);
+    if (extraTransportCoverage.value) total += Math.floor(insuranceCost.value / 2);
+  }
+  return total;
+});
+
+// Methods
+const addToCompare = () => {
+  store.addPolicy({
+    id: Date.now(),
+    destination: destination.value,
+    startDate: startDate.value,
+    startHour: startHour.value,
+    days: days.value,
+    insuranceAmount: insuranceAmount.value,
+    extraInjuryCoverage: extraInjuryCoverage.value,
+    extraEmergencyCoverage: extraEmergencyCoverage.value,
+    extraTransportCoverage: extraTransportCoverage.value,
+    totalCost: totalCost.value,
+  });
+};
 </script>
 
 <template>
@@ -217,7 +217,7 @@ export default defineComponent({
       </div>
 
       <div>
-        <button @click="addToCompare(); submit()">+</button>
+        <button @click="addToCompare()">+</button>
       </div>
 
 
