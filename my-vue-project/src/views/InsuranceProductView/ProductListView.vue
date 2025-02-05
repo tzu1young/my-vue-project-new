@@ -70,10 +70,11 @@ onMounted(async () => {
                     <!-- </RouterLink> -->
 
                     <div class="card-body">
-                        <h5 class="card-title" style="font-weight: bold;">{{ product.productname }}</h5>
-                        <p class="card-text"> {{ product.productDescription && product.productDescription.length <= 100
-                            ? product.productDescription : (product.productDescription ?
-                                product.productDescription.substring(0, 100) : '') }}</p>
+                        <h4 class="card-title" style="font-weight: bold;">{{ product.productname }}</h4> <!-- 新增h4 -->
+                        <p class="card-text" style="font-size: 18px" ;> {{ product.productDescription &&
+                            product.productDescription.length <= 100 ? product.productDescription :
+                            (product.productDescription ? product.productDescription.substring(0, 100) : '') }}</p>
+                                <!-- 新增font-size -->
                                 <!-- <p>{{ datas.categoryid }}</p> -->
                     </div>
                 </div>

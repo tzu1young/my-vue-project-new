@@ -1,4 +1,7 @@
 <script setup>
+import { ref } from 'vue';
+
+const pdfUrl = ref('/sample.pdf'); // PDF 存放在 public 資料夾
 
 </script>
 
@@ -15,12 +18,11 @@
                         <h2 class="text-center fw-bold mb-4">商品條款</h2>
                         <h2 class="fw-bold mb-2">商品名稱/文號</h2>
                         <div>
-                            <a class="d-table fw-bold mb-1 ps-1 ps-lg-3"
-                                href="https://direct.fubonlife.com.tw/directBack/documents/EJCADD_條款樣張_1140101.pdf"
-                                download="">
-                                <span class="d-table-cell"><i></i></span>
-                                <span class="d-table-cell fw-bold">安心保網路投保旅行平安保險：</span>
-                            </a>
+                            <div>
+                                <p class="fw-bold">
+                                    <a :href="pdfUrl" target="_blank">安心保網路投保旅行平安保險：</a>
+                                </p>
+                            </div>
                             <div class="d-table">
                                 <div class="d-block d-md-table-row">
                                     <div class="d-block d-md-table-cell fw-bold">給付項目：</div>

@@ -24,13 +24,13 @@ watchEffect(async () => {
       <li class="custom-list-group-item"
         :class="{ 'current': selectedCategory === 'featured', 'list-group-item ': true }"
         @click="clickHandler('featured')">
-        <button type="button" class="btn">精選產品</button>
+        <button type="button" class="btn btn-lg">精選產品</button> <!-- 新增btn-lg-->
       </li>
       <!-- 類別按鈕 -->
       <li class="custom-list-group-item"
         :class="{ 'current': selectedCategory === category.categoryid, 'list-group-item': true }"
         v-for="category in categories" :key="category.categoryid" @click="clickHandler(category.categoryid)">
-        <button type="button" class="btn">{{ category.categoryname }}</button>
+        <button type="button" class="btn btn-lg">{{ category.categoryname }}</button> <!-- 新增btn-lg-->
       </li>
     </ul>
   </div>
