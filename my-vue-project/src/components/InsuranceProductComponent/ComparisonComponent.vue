@@ -38,7 +38,7 @@ const initData = reactive({
             const canvas = await html2canvas(element, {
                 useCORS: true,
                 backgroundColor: "#fff",
-                scale: 2, // 解析度較高但不過大，避免模糊
+                scale: 2, // 解析度較高但不過大，避免模糊 新增
             });
 
             const imgData = canvas.toDataURL("image/png");
@@ -52,7 +52,7 @@ const initData = reactive({
 
 
 
-            pdf.addImage(imgData, "PNG", 0, 0, canvas.width * 0.3, canvas.height * 0.3);
+            pdf.addImage(imgData, "PNG", 0, 0, canvas.width * 0.3, canvas.height * 0.3); //新增
             pdf.save("試算方案比較.pdf");
 
             initData.formData.pdf = pdf; // **暫存 PDF**
@@ -161,7 +161,8 @@ const initData = reactive({
 <template>
     <div class="main" id="view">
         <h2>比較結果</h2>
-        <table v-if="policies.length === 2" border="1">
+        <!-- 新增 -->
+        <table v-if="policies.length === 2" border="1" class="tablevw">
             <thead>
                 <tr>
                     <th>項目</th>
@@ -226,7 +227,7 @@ const initData = reactive({
 
 <style lang="css" scoped>
 table {
-    width: 100%;
+    /* width: 100%; */
     border-collapse: collapse;
     /* white-space: nowrap;
     overflow-x: auto;
@@ -273,11 +274,17 @@ table td {
 
 }
 
+
 .main {
     margin: 20px auto;
     align-items: center;
-    width: 80%;
+    width: 80%; 
+    /* width: 80vw; */
     font-size: 20px;
+}
+/* 新增 */
+.tablevw{
+  width: 17vw;
 }
 
 h2 {
