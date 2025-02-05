@@ -2,12 +2,15 @@
 import { onMounted } from "vue";
 import { useInsuranceStore } from "@/store/insuranceStore"; // 引入 pinia store
 import { storeToRefs } from "pinia"; // 引入 storeToRefs
+import Swal from "sweetalert2";
 //pdf用
 import { ref, reactive } from "vue";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 
+const BASE_URL = import.meta.env.VITE_APIURL
+const API_URL = `${BASE_URL}/productlist/SendPDF`
 //pinia
 const store = useInsuranceStore(); // 使用 pinia store
 const { policies } = storeToRefs(store); // 取得 policies 陣列
@@ -23,18 +26,19 @@ onMounted(() => {
 // 初始化數據
 
 const initData = reactive({
-
-    formData: {},
+    formData: {
+        email: "", // 存儲輸入的 email
+        pdf: null  // 預先定義 pdf，避免 undefined
+    },
     event: {
-        savePdf: async () => {
+        generatePdf: async () => {
             const element = document.getElementById("view");
             if (!element) return;
-
 
             const canvas = await html2canvas(element, {
                 useCORS: true,
                 backgroundColor: "#fff",
-                scale: 4, // 提高解析度，避免縮小後模糊
+                scale: 2, // 解析度較高但不過大，避免模糊
             });
 
             const imgData = canvas.toDataURL("image/png");
@@ -47,15 +51,111 @@ const initData = reactive({
             });
 
 
-            // **將圖片等比例縮小後加入 PDF**
-            pdf.addImage(imgData, "PNG", 0, 0, canvas.width * 0.2, canvas.height * 0.2);
-            pdf.save("等比例縮小_A4.pdf");
+
+            pdf.addImage(imgData, "PNG", 0, 0, canvas.width * 0.3, canvas.height * 0.3);
+            pdf.save("試算方案比較.pdf");
+
+            initData.formData.pdf = pdf; // **暫存 PDF**
+        },
+
+        sendPdf: async () => {
+            if (!initData.formData.email) {
+                    Swal.fire({
+                    icon: "warning",
+                    title: "請輸入 Email",
+                    text: "發送 PDF 之前，請輸入一個有效的 Email。",
+                    confirmButtonColor: "#3085d6", // 確認按鈕顏色
+                    confirmButtonText: '<span style="color: white;">確定</span>', 
+                    });
+                    return;
+                }
+                            if (!initData.formData.pdf) {
+                                Swal.fire({
+                    icon: "warning",
+                    title: "請先生成 PDF",
+                    confirmButtonColor: "#3085d6", // 確認按鈕顏色
+                    confirmButtonText: '<span style="color: white;">確定</span>', 
+                    
+                    });
+
+                return;
+            }
+
+            // **將 PDF 轉為 Base64**
+            Swal.fire({
+  title: "確定要發送 PDF 嗎？",
+  text: "確認後將會發送 PDF 到指定 Email。",
+  icon: "question",
+  showCancelButton: true,
+  cancelButtonText: '<span style="color: white;">取消</span>',
+  cancelButtonColor: "#d33",
+  confirmButtonColor: "#3085d6", // 確認按鈕顏色
+  confirmButtonText: '<span style="color: white;">確認</span>', // 文字變紅色
+}).then((result) => {
+  if (result.isConfirmed) {
+    const pdfBlob = initData.formData.pdf.output("blob");
+    const reader = new FileReader();
+
+    // 顯示「發送中」狀態
+    Swal.fire({
+      title: "發送中...",
+      text: "請稍候，正在寄送 PDF。",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    reader.readAsDataURL(pdfBlob);
+    reader.onloadend = async () => {
+      const base64Pdf = reader.result.split(",")[1]; // 去掉 Data URL 的前綴
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: initData.formData.email,
+            pdf: base64Pdf,
+          }),
+        });
+
+        if (response.ok) {
+          Swal.fire({
+            icon: "success",
+            title: "成功！",
+            text: "PDF 已成功寄送！",
+            confirmButtonColor: "#3085d6", // 確認按鈕顏色
+            confirmButtonText: '<span style="color: white;">ok</span>', 
+          });
+
+          // ✅ 成功後清空 Email 欄位
+          initData.formData.email = "";
+        } else {
+          const errorMsg = await response.text();
+          Swal.fire({
+            icon: "error",
+            title: "發送失敗",
+            text: errorMsg || "請稍後再試。",
+          });
         }
-
-
-
+      } catch (error) {
+        console.error("錯誤:", error);
+        Swal.fire({
+          icon: "error",
+          title: "發送失敗",
+          text: "請檢查網絡連接或稍後再試。",
+        });
+          }
+        }
+      }});
     },
+  },
 });
+
+
 </script>
 
 <template>
@@ -117,9 +217,11 @@ const initData = reactive({
         </table>
     </div>
 
-    <div class="d-flex justify-content-center">
-        <button class="pdfbtn" type="primary" @click="initData.event.savePdf">另存為PDF</button>
-    </div>
+    <div class="d-flex justify-content-center align-items-center gap-3">
+    <button class="pdfbtn btn " @click="initData.event.generatePdf">另存為 PDF</button>
+    <input type="email" v-model="initData.formData.email" class="form-control w-auto" placeholder="輸入 Email" />
+    <button class="pdfbtn btn " @click="initData.event.sendPdf">寄送 PDF</button>
+</div>
 </template>
 
 <style lang="css" scoped>
